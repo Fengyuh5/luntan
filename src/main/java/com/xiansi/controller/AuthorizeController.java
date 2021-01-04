@@ -3,7 +3,6 @@ package com.xiansi.controller;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +31,14 @@ public class AuthorizeController {
 		AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
 		//添加github链接必须的值
 		accessTokenDTO.setClient_id("Iv1.34f5e26d12ae33d5");
-		accessTokenDTO.setClient_secret("1acecc01e918a795c9a823e8811468dfad486508");
+		accessTokenDTO.setClient_secret("eaf22b6087b56f6177c7013f98cef50d40a9b969");
 		accessTokenDTO.setCode(code);
 		accessTokenDTO.setRedirect_uri("http://localhost:8888/callback");
 		accessTokenDTO.setState(state);
 		String accessToken = githubProvider.getAccessToken(accessTokenDTO);
 		GithubUser githubUser = githubProvider.getUser(accessToken);
 		//System.out.println(user.getName());//返回的null值已解决。
-		if (githubUser != null) {
+		if (githubUser != null && githubUser.getId() != null) {
 			User user = new User();
 			String token = UUID.randomUUID().toString();
 			//插入数据库
