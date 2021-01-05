@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import com.xiansi.dto.QuestionDTO;
 import com.xiansi.mapper.QuestionMapper;
@@ -17,6 +17,7 @@ import com.xiansi.mapper.UserMapper;
 import com.xiansi.model.Question;
 import com.xiansi.model.User;
 import com.xiansi.service.QuestionService;
+
 
 @Controller
 public class IndexController {

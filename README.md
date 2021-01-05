@@ -10,20 +10,19 @@
 ##脚本  
 ```sql
 CREATE TABLE user (
-	id INT NOT NULL,
+	id INT NOT NULL auto_increment primary key,
 	account_id VARCHAR(100),
 	name VARCHAR(50),
 	token CHAR(36),
 	gmt_create BIGINT,
 	gmt_modified BIGINT
-)
-go
-use xiansi;
+);
+
 alter table user add bio varchar(256) null;
 alter table user add avatar_url varchar(100) null;
-go
 
-use xiansi;
+
+
 create table question(
 	id int auto_increment primary key,
 	title varchar(50),

@@ -21,13 +21,14 @@ public class QuestionService {
 	private UserMapper userMapper;
 	public List<QuestionDTO> list() {
 		List<Question> questions = questionMapper.list();
-		List<QuestionDTO> questionDTOList = new ArrayList<>();
+		List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
 		for (Question question : questions) {
 		User user =	userMapper.findById(question.getCreator());
 		QuestionDTO questionDTO = new QuestionDTO();
 		BeanUtils.copyProperties(question, questionDTO);
 		questionDTO.setUser(user);
 		questionDTOList.add(questionDTO);
+		System.out.println(questionDTOList);
 		}
 		return questionDTOList;
 	}
