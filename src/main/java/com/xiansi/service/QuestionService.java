@@ -28,7 +28,7 @@ public class QuestionService {
 		BeanUtils.copyProperties(question, questionDTO);
 		questionDTO.setUser(user);
 		questionDTOList.add(questionDTO);
-		System.out.println(questionDTOList);
+		//System.out.println(questionDTOList);
 		}
 		return questionDTOList;
 	}
