@@ -57,8 +57,12 @@
     		<artifactId>mysql-connector-java</artifactId>
     		<version>5.1.47</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
-
-		
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok-maven-plugin</artifactId>
+		    <version>1.18.16.0</version>
+		    <scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

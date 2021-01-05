@@ -50,8 +50,8 @@ public class PublishController {
 		
 		User user = null;
 		Cookie[] cookies = request.getCookies(); //通过request获取Cookies键值对
-		for (Cookie cookie : cookies) {
-			if (cookie != null) {
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) { //获取键
 					String token = cookie.getValue();//获取值
 					user = userMapper.findByToken(token);
@@ -62,6 +62,7 @@ public class PublishController {
 				}
 			}
 		}
+		user = (User) request.getSession().getAttribute("user");
 		if (user == null) {
 			model.addAttribute("error","用户未登录");
 			return "publish";

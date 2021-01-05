@@ -1,6 +1,7 @@
 package com.xiansi.provider;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ import okhttp3.Response;
 public class GithubProvider {
 	public String getAccessToken(AccessTokenDTO accessTokenDTO) {
 		MediaType mediaType = MediaType.get("application/json;charset=utf-8");
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = new OkHttpClient().newBuilder().callTimeout(60000, TimeUnit.MILLISECONDS).readTimeout(60000,TimeUnit.MILLISECONDS).build();
 		RequestBody body = RequestBody.create(mediaType,JSON.toJSONString(accessTokenDTO));
 		Request request = new Request.Builder()
 				.url("https://github.com/login/oauth/access_token")
@@ -43,7 +44,7 @@ public class GithubProvider {
 			return null;	
 	}
 	public GithubUser getUser(String accessToken) {
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = new OkHttpClient().newBuilder().callTimeout(60000, TimeUnit.MILLISECONDS).readTimeout(60000,TimeUnit.MILLISECONDS).build();
 		Request request = new Request.Builder()
 				.url("https://api.github.com/user")
 				.header("Authorization", "token "+ accessToken)

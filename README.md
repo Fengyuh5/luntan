@@ -4,6 +4,7 @@
 [Spring文档](spring.io/guides)  
 [Spring Web](spring.io/guides/gs/serving-web-content/)  
 [bootstrap](v3.bootcss.com/getting-started/)  
+[lombok](projectlombok.org)   
 ##工具  
 [Git](git-scm.com)  
 ##脚本  
@@ -19,6 +20,7 @@ CREATE TABLE user (
 go
 use xiansi;
 alter table user add bio varchar(256) null;
+alter table user add avatar_url varchar(100) null;
 go
 
 use xiansi;

@@ -30,8 +30,9 @@ public class AuthorizeController {
 						   HttpServletResponse response) {
 		AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
 		//添加github链接必须的值
+		
 		accessTokenDTO.setClient_id("Iv1.34f5e26d12ae33d5");
-		accessTokenDTO.setClient_secret("eaf22b6087b56f6177c7013f98cef50d40a9b969");
+		accessTokenDTO.setClient_secret("55f754d7b50b54aca2477c674ade62f748cc8779");
 		accessTokenDTO.setCode(code);
 		accessTokenDTO.setRedirect_uri("http://localhost:8888/callback");
 		accessTokenDTO.setState(state);
@@ -47,6 +48,7 @@ public class AuthorizeController {
 			user.setAccount_id(String.valueOf(githubUser.getId()));
 			user.setGmt_create(System.currentTimeMillis());
 			user.setGmt_modified(user.getGmt_create());
+			user.setAvatar_url(githubUser.getAvatar_url());
 			userMapper.insert(user);
 			//手动模拟cookie去验证访问数据库查询
 			response.addCookie(new Cookie("token", token));
@@ -58,3 +60,4 @@ public class AuthorizeController {
 
 	}
 }
+
