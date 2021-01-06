@@ -38,5 +38,8 @@ create table question(
 );
 ```  
 ##Bug
-1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题  。
-2.使用questionList拿到的user数据，avatar_url属性没有值。  
+1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题(2021/01/06)。  
+2.使用questionList拿到的user数据，avatar_url属性没有值(2021/01/06)。    
+#Bug修复记录
+1.前端无法以列表显示后台数据，原因为th:each中的questions拼写错误。  
+2.使用questionList拿到的user数据，avatar_url属性没有值，原因是在application.preperties中添加了mybatis.configuration.map-underscore-to-camel-case=true，改成false即可。  
