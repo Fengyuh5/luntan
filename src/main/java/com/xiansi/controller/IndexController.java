@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xiansi.dto.PaginationDTO;
 import com.xiansi.dto.QuestionDTO;
 import com.xiansi.mapper.QuestionMapper;
 import com.xiansi.mapper.UserMapper;
@@ -27,7 +29,9 @@ private UserMapper userMapper;
 private QuestionService questionService;
 @GetMapping("/")
 public String index(HttpServletRequest request,
-					Model model) {
+					Model model,
+					@RequestParam(name = "page",defaultValue = "1") Integer page,
+					@RequestParam(name = "size",defaultValue = "8") Integer size) {
 	Cookie[] cookies = request.getCookies(); //通过request获取Cookies键值对
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
@@ -41,9 +45,10 @@ public String index(HttpServletRequest request,
 			}
 		}
 	}
-	List<QuestionDTO> questionList = questionService.list();
-	System.out.println(questionList);//能拿到数据库的数据，但是无法从前端显示，具体原因未知，index页面从56行开始获取值，但无法获取
-	model.addAttribute("questions", questionList);
+	PaginationDTO pagination = questionService.list(page, size);
+	//System.out.println(questionList);//能拿到数据库的数据，但是无法从前端显示，具体原因未知，index页面从56行开始获取值，但无法获取
+	//bug已经修复
+	model.addAttribute("pagination", pagination);
 	return "index";
 	}
 }
