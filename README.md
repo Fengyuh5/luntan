@@ -1,7 +1,7 @@
 ## 弦思社区
 ## 功能列表  
 开源论坛、引入github第三方登录。  
-现有功能提问；问答系统 (回复、通知、最新、最热、消除零回复持续更新中)    
+现有功能提问；问答系统 (功能持续更新中)    
 ## 资料
 [Spring 文档](https://spring.io/guides)    
 [Spring Web](https://spring.io/guides/gs/serving-web-content/)   
@@ -53,6 +53,7 @@ create table question(
 ##Bug
 1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题(2021/01/06)。  
 2.使用questionList拿到的user数据，avatar_url属性没有值(2021/01/06)。    
+3.页面删除cookies后，在登录会重复插入sql(暂未解决)
 #Bug修复记录
 1.前端无法以列表显示后台数据，原因为th:each中的questions拼写错误。  
 2.使用questionList拿到的user数据，avatar_url属性没有值，原因是在application.preperties中添加了mybatis.configuration.map-underscore-to-camel-case=true，改成false即可。  

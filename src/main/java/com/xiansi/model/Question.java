@@ -14,5 +14,5 @@ public class Question {
 	private Integer view_count;
 	private Integer like_count;
 	private String tag;
-	
+	private String account_id;
 }

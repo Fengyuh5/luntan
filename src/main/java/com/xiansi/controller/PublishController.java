@@ -1,6 +1,6 @@
 package com.xiansi.controller;
 
-import javax.servlet.http.Cookie;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.xiansi.mapper.QuestionMapper;
-import com.xiansi.mapper.UserMapper;
+
 import com.xiansi.model.Question;
 import com.xiansi.model.User;
 
@@ -19,17 +19,16 @@ import com.xiansi.model.User;
 public class PublishController {
 	@Autowired
 	private QuestionMapper questionMapper;
-	@Autowired
-	private UserMapper userMapper;
+
 	@GetMapping("/publish")
 	public String publish() {
 		return "publish";
 	}
 	@PostMapping("/publish")
 	public String doPublish(
-			@RequestParam("title") String title,
-			@RequestParam("description") String description,
-			@RequestParam("tag") String tag,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestParam(value = "description", required = false) String description,
+			@RequestParam(value ="tag", required = false) String tag,
 			HttpServletRequest request,
 			Model model) {
 		model.addAttribute("title", title);
@@ -48,21 +47,8 @@ public class PublishController {
 			return "publish";
 		}
 		
-		User user = null;
-		Cookie[] cookies = request.getCookies(); //通过request获取Cookies键值对
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("token")) { //获取键
-					String token = cookie.getValue();//获取值
-					user = userMapper.findByToken(token);
-						if (user != null) {
-							request.getSession().setAttribute("user", user);
-						}
-					break;
-				}
-			}
-		}
-		user = (User) request.getSession().getAttribute("user");
+		
+		User user = (User) request.getSession().getAttribute("user");
 		if (user == null) {
 			model.addAttribute("error","用户未登录");
 			return "publish";
@@ -72,6 +58,8 @@ public class PublishController {
 		question.setDescription(description);
 		question.setTag(tag);
 		question.setCreator(user.getId());
+		question.setId(user.getId());
+		question.setAccount_id(user.getAccount_id());
 		question.setGmt_create(System.currentTimeMillis());
 		question.setGmt_modified(question.getGmt_create());
 		
