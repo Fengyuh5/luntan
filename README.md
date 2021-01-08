@@ -51,9 +51,11 @@ create table question(
 );
 ```  
 ##Bug
-1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题(2021/01/06)。  
-2.使用questionList拿到的user数据，avatar_url属性没有值(2021/01/06)。    
-3.页面删除cookies后，在登录会重复插入sql(暂未解决)
+1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题(2021/01/06已解决)。  
+2.使用questionList拿到的user数据，avatar_url属性没有值(2021/01/06已解决)。    
+3.页面删除cookies后，在登录会重复插入sql(2021/01/08已解决)
+4.数据库不存在一条用户数据或者一条信息数据，页面则会报错。在index下无法找到question.user.avatar_url，暂时未解决
 #Bug修复记录
 1.前端无法以列表显示后台数据，原因为th:each中的questions拼写错误。  
-2.使用questionList拿到的user数据，avatar_url属性没有值，原因是在application.preperties中添加了mybatis.configuration.map-underscore-to-camel-case=true，改成false即可。  
+2.使用questionList拿到的user数据，avatar_url属性没有值，原因是在application.preperties中添加了mybatis.configuration.map-underscore-to-camel-case=true，改成false即可。   
+3.页面删除cookies后或者退出登录后，加入了userService验证，去判断用户是否存在。

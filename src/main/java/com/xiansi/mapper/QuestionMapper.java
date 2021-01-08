@@ -32,4 +32,7 @@ public interface QuestionMapper {
 	//获取当前用户发帖的数量值
 	@Select("select count(1) from question where account_id = #{account_id}")
 	Integer countByUserId(@Param(value = "account_id")String account_id);
+
+	@Select("select * from question where id = #{id}")
+	Question getById(@Param(value = "id")Integer id);
 }

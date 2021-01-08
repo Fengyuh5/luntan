@@ -32,4 +32,3 @@ public String index(HttpServletRequest request,
 	return "index";
 	}
 }
-

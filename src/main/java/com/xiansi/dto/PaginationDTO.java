@@ -21,7 +21,6 @@ public class PaginationDTO {
 		} else {
 			totalPage = totalCount / size + 1;
 		}
-
 		if (page < 1) {
 			page = 1;
 		}
