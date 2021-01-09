@@ -42,7 +42,7 @@ public class QuestionService {
 		List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
 		
 		for (Question question : questions) {
-			User user =	userMapper.findById(question.getCreator());
+			User user =	userMapper.selectByPrimaryKey(question.getCreator());
 			QuestionDTO questionDTO = new QuestionDTO();
 			BeanUtils.copyProperties(question, questionDTO);
 			questionDTO.setUser(user);
@@ -75,7 +75,7 @@ public class QuestionService {
 		List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
 		
 		for (Question question : questions) {
-			User user =	userMapper.findById(question.getCreator());
+			User user =	userMapper.selectByPrimaryKey(question.getCreator());
 			QuestionDTO questionDTO = new QuestionDTO();
 			BeanUtils.copyProperties(question, questionDTO);
 			questionDTO.setUser(user);
@@ -87,14 +87,26 @@ public class QuestionService {
 		return paginationDTO;
 		
 	}
-	public QuestionDTO getByid(Integer id) {
+	public QuestionDTO getById(Integer id) {
 		Question question = questionMapper.getById(id);
 		QuestionDTO questionDTO = new QuestionDTO();
 		BeanUtils.copyProperties(question, questionDTO);
-		User user =	userMapper.findById(question.getCreator());
+		User user =	userMapper.selectByPrimaryKey(question.getCreator());
 		questionDTO.setUser(user);
 		return questionDTO;
 
 	}
+	public void createOrUpdate(Question question) {
+		if (question.getId() == 0) {
+			question.setGmt_create(System.currentTimeMillis());
+			question.setGmt_modified(question.getGmt_create());
+			questionMapper.create(question);
+		} else {
+			question.setGmt_modified(question.getGmt_create());
+			questionMapper.update(question);
+		}
+		
+	}
+
 
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.xiansi.dto.AccessTokenDTO;
 import com.xiansi.dto.GithubUser;
-import com.xiansi.mapper.UserMapper;
 import com.xiansi.model.User;
 import com.xiansi.provider.GithubProvider;
 import com.xiansi.service.UserService;

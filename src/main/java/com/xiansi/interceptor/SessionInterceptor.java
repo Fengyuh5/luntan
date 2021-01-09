@@ -1,5 +1,7 @@
 package com.xiansi.interceptor;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xiansi.mapper.UserMapper;
 import com.xiansi.model.User;
+import com.xiansi.model.UserExample;
 @Service
 //拦截器的内容
 public class SessionInterceptor implements HandlerInterceptor {
@@ -24,9 +27,11 @@ public class SessionInterceptor implements HandlerInterceptor {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) { //获取键
 					String token = cookie.getValue();//获取值
-					User user = userMapper.findByToken(token);
-						if (user != null) {
-							request.getSession().setAttribute("user", user);
+					UserExample userExample = new UserExample();
+					userExample.createCriteria().andTokenEqualTo(token);
+					List<User> users = userMapper.selectByExample(userExample);
+						if (users.size() != 0) {
+							request.getSession().setAttribute("user", users.get(0));
 						}
 					break;
 				}

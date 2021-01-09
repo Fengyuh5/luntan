@@ -49,7 +49,11 @@ create table question(
 	tag varchar(256)
 
 );
-```  
+  
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```
+```
 ##Bug
 1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题(2021/01/06已解决)。  
 2.使用questionList拿到的user数据，avatar_url属性没有值(2021/01/06已解决)。    

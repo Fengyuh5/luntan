@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.xiansi.model.Question;
 
@@ -18,7 +19,7 @@ public interface QuestionMapper {
 	
 	//2021.1.6 通过mysql limit分页查询
 	@Select("select * from question limit #{offset},#{size}")
-	List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size")Integer size);
+	List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 	
 	//2021.1.6 返回question的行数,补充的知识点count(*)和count(1)在以前的区别是什么
 	@Select("select count(1) from question")
@@ -28,11 +29,14 @@ public interface QuestionMapper {
 	//根据countByUserId接口返回的行数去计算分页数。
 	@Select("select * from question where account_id = #{account_id} limit #{offset},#{size}")
 	List<Question> listByUserId(@Param(value = "account_id") String account_id, @Param(value = "offset") Integer offset, 
-								@Param(value = "size")Integer size);
+								@Param(value = "size") Integer size);
 	//获取当前用户发帖的数量值
 	@Select("select count(1) from question where account_id = #{account_id}")
-	Integer countByUserId(@Param(value = "account_id")String account_id);
+	Integer countByUserId(@Param(value = "account_id") String account_id);
 
 	@Select("select * from question where id = #{id}")
-	Question getById(@Param(value = "id")Integer id);
+	Question getById(@Param(value = "id") Integer id);
+
+	@Update("update question set title = #{title}, description = #{description}, gmt_modified = #{gmt_modified}, tag = #{tag} where id = #{id}")
+	void update(Question question);
 }
