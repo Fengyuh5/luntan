@@ -10,11 +10,15 @@
         location="D:\eclipse-workspace\xiansiluntan\lib\mysql-connector-java-5.1.7-bin.jar" />
  
     <context id="Tables" targetRuntime="MyBatis3">
+     <!--添加分页  -->
+     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+
         <!--去除注释 -->
         <commentGenerator>
             <property name="suppressAllComments" value="true" />
+            
         </commentGenerator>
- 
+ 		
         <!--数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
             connectionURL="jdbc:mysql://localhost/luntan?useSSL=false" userId="root" password="wangji20">
@@ -38,6 +42,7 @@
         <sqlMapGenerator targetPackage="mapper"
             targetProject="xiansiluntan/src/main/resources">
             <property name="enableSubPackages" value="false" />
+            
         </sqlMapGenerator>
         <!--生成Dao文件 可以配置 type="XMLMAPPER"生成xml的dao实现 context id="DB2Tables" 修改targetRuntime="MyBatis3" -->
         <javaClientGenerator type="XMLMAPPER"
@@ -48,9 +53,14 @@
  
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等 enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 设置以上属性可以不生成这些拼接的方法 -->
-        <table tableName="user" domainObjectName="User">
+        <!--  <table tableName="user" domainObjectName="User">
         	<property name="useActualColumnNames" value="true"/>
         </table>       
-            
+        <table tableName="question" domainObjectName="Question">
+        	<property name="useActualColumnNames" value="true"/>
+        </table>   这里注释的原因是 xml每次都不会自动覆盖文件，所以直接注释掉。-->  
+        <table tableName="comment" domainObjectName="Comment">
+        	<property name="useActualColumnNames" value="true"/>
+        </table>     
     </context>
 </generatorConfiguration>

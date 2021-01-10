@@ -18,7 +18,7 @@ import com.xiansi.dto.GithubUser;
 import com.xiansi.model.User;
 import com.xiansi.provider.GithubProvider;
 import com.xiansi.service.UserService;
-
+//登录，退出，添加用户写入数据库
 @Controller
 public class AuthorizeController {
 	@Autowired
@@ -49,10 +49,8 @@ public class AuthorizeController {
 			user.setAccount_id(String.valueOf(githubUser.getId()));
 			user.setAvatar_url(githubUser.getAvatar_url());
 			userService.createOrUpdate(user);
-			//userMapper.insert(user);
 			//手动模拟cookie去验证访问数据库查询
 			response.addCookie(new Cookie("token", token));
-			//request.getSession().setAttribute("user", user);
 			return "redirect:/";
 		} else {
 			return "redirect:/";

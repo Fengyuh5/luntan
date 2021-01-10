@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.xiansi.model.User;
 import com.xiansi.model.UserExample;
+import org.apache.ibatis.session.RowBounds;
 
 
 public interface UserMapper {
@@ -20,6 +21,8 @@ public interface UserMapper {
 
 	int insertSelective(User record);
 
+	List<User> selectByExampleWithRowbounds(UserExample example, RowBounds rowBounds);
+
 	List<User> selectByExample(UserExample example);
 
 	User selectByPrimaryKey(Integer id);
@@ -30,5 +33,6 @@ public interface UserMapper {
 
 	int updateByPrimaryKeySelective(User record);
 
-	int updateByPrimaryKey(User record);	
+	int updateByPrimaryKey(User record);
+
 }
