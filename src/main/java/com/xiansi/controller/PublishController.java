@@ -74,6 +74,9 @@ public class PublishController {
 		question.setCreator(user.getId());
 		question.setId(user.getId());
 		question.setAccount_id(user.getAccount_id());
+		question.setComment_count(0);
+		question.setLike_count(0);
+		question.setView_count(0);
 		question.setId(id);
 		questionService.createOrUpdate(question);
 		//questionMapper.create(question);

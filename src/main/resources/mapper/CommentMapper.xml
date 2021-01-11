@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiansi.mapper.CommentMapper">
   <resultMap id="BaseResultMap" type="com.xiansi.model.Comment">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parent_id" jdbcType="BIGINT" property="parent_id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="commentator" jdbcType="INTEGER" property="commentator" />
     <result column="gmt_create" jdbcType="BIGINT" property="gmt_create" />
     <result column="gmt_modified" jdbcType="BIGINT" property="gmt_modified" />
-    <result column="like_count" jdbcType="BIGINT" property="like_count" />
+    <result column="like_count" jdbcType="INTEGER" property="like_count" />
     <result column="content" jdbcType="VARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -86,15 +86,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from comment
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from comment
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.xiansi.model.CommentExample">
     delete from comment
@@ -106,9 +106,9 @@
     insert into comment (id, parent_id, type, 
       commentator, gmt_create, gmt_modified, 
       like_count, content)
-    values (#{id,jdbcType=BIGINT}, #{parent_id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{parent_id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{commentator,jdbcType=INTEGER}, #{gmt_create,jdbcType=BIGINT}, #{gmt_modified,jdbcType=BIGINT}, 
-      #{like_count,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR})
+      #{like_count,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiansi.model.Comment">
     insert into comment
@@ -140,10 +140,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="parent_id != null">
-        #{parent_id,jdbcType=BIGINT},
+        #{parent_id,jdbcType=INTEGER},
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
@@ -158,7 +158,7 @@
         #{gmt_modified,jdbcType=BIGINT},
       </if>
       <if test="like_count != null">
-        #{like_count,jdbcType=BIGINT},
+        #{like_count,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -175,10 +175,10 @@
     update comment
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.parent_id != null">
-        parent_id = #{record.parent_id,jdbcType=BIGINT},
+        parent_id = #{record.parent_id,jdbcType=INTEGER},
       </if>
       <if test="record.type != null">
         type = #{record.type,jdbcType=INTEGER},
@@ -193,7 +193,7 @@
         gmt_modified = #{record.gmt_modified,jdbcType=BIGINT},
       </if>
       <if test="record.like_count != null">
-        like_count = #{record.like_count,jdbcType=BIGINT},
+        like_count = #{record.like_count,jdbcType=INTEGER},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
@@ -205,13 +205,13 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update comment
-    set id = #{record.id,jdbcType=BIGINT},
-      parent_id = #{record.parent_id,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=INTEGER},
+      parent_id = #{record.parent_id,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       commentator = #{record.commentator,jdbcType=INTEGER},
       gmt_create = #{record.gmt_create,jdbcType=BIGINT},
       gmt_modified = #{record.gmt_modified,jdbcType=BIGINT},
-      like_count = #{record.like_count,jdbcType=BIGINT},
+      like_count = #{record.like_count,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -221,7 +221,7 @@
     update comment
     <set>
       <if test="parent_id != null">
-        parent_id = #{parent_id,jdbcType=BIGINT},
+        parent_id = #{parent_id,jdbcType=INTEGER},
       </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -236,24 +236,24 @@
         gmt_modified = #{gmt_modified,jdbcType=BIGINT},
       </if>
       <if test="like_count != null">
-        like_count = #{like_count,jdbcType=BIGINT},
+        like_count = #{like_count,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xiansi.model.Comment">
     update comment
-    set parent_id = #{parent_id,jdbcType=BIGINT},
+    set parent_id = #{parent_id,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       commentator = #{commentator,jdbcType=INTEGER},
       gmt_create = #{gmt_create,jdbcType=BIGINT},
       gmt_modified = #{gmt_modified,jdbcType=BIGINT},
-      like_count = #{like_count,jdbcType=BIGINT},
+      like_count = #{like_count,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.xiansi.model.CommentExample" resultMap="BaseResultMap">
     select

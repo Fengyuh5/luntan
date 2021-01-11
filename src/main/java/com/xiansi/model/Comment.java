@@ -1,9 +1,9 @@
 package com.xiansi.model;
 
 public class Comment {
-    private Long id;
+    private Integer id;
 
-    private Long parent_id;
+    private Integer parent_id;
 
     private Integer type;
 
@@ -13,23 +13,23 @@ public class Comment {
 
     private Long gmt_modified;
 
-    private Long like_count = (long) 0;
+    private Integer like_count;
 
     private String content;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getParent_id() {
+    public Integer getParent_id() {
         return parent_id;
     }
 
-    public void setParent_id(Long parent_id) {
+    public void setParent_id(Integer parent_id) {
         this.parent_id = parent_id;
     }
 
@@ -65,11 +65,11 @@ public class Comment {
         this.gmt_modified = gmt_modified;
     }
 
-    public Long getLike_count() {
+    public Integer getLike_count() {
         return like_count;
     }
 
-    public void setLike_count(Long like_count) {
+    public void setLike_count(Integer like_count) {
         this.like_count = like_count;
     }
 
