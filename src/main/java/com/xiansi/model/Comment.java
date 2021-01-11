@@ -13,7 +13,7 @@ public class Comment {
 
     private Long gmt_modified;
 
-    private Integer like_count;
+    private Integer like_count = 0;
 
     private String content;
 
