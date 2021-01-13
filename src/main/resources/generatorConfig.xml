@@ -53,13 +53,13 @@
  
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等 enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 设置以上属性可以不生成这些拼接的方法 -->
-          <table tableName="user" domainObjectName="User">
+        <!--  <table tableName="user" domainObjectName="User">
         	<property name="useActualColumnNames" value="true"/>
         </table>       
          <table tableName="question" domainObjectName="Question">
         	<property name="useActualColumnNames" value="true"/>
         </table> 
-          <!--这里注释的原因是 xml每次都不会自动覆盖文件，所以直接注释掉。-->  
+          <这里注释的原因是 xml每次都不会自动覆盖文件，所以直接注释掉。-->  
         <table tableName="comment" domainObjectName="Comment">
         	<property name="useActualColumnNames" value="true"/>
         </table>  

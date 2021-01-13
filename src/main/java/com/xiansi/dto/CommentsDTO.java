@@ -24,5 +24,7 @@ public class CommentsDTO {
 	 private String content;
 	 
 	 private User user;
+	 
+	 private Integer comment_count;
 
 }

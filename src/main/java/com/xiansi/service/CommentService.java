@@ -6,17 +6,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.ibatis.annotations.Mapper;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.xiansi.dto.CommentDTO;
+
 import com.xiansi.dto.CommentsDTO;
 import com.xiansi.enums.CommentTypeEnum;
 import com.xiansi.exception.CustomizeErrorCode;
 import com.xiansi.exception.CustomizeException;
+import com.xiansi.mapper.CommentExtMapper;
 import com.xiansi.mapper.CommentMapper;
 import com.xiansi.mapper.QuestionExtMapper;
 import com.xiansi.mapper.QuestionMapper;
@@ -37,7 +38,8 @@ public class CommentService {
 	private QuestionExtMapper questionExtMapper;
 	@Autowired
 	private UserMapper userMapper;
-
+	@Autowired
+	private CommentExtMapper commentExtMapper;
 	@Transactional
 	public void insert(Comment comment) {
 		if (comment.getParent_id() == null || comment.getParent_id() == 0) {
@@ -55,6 +57,11 @@ public class CommentService {
 				throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
 			}
 			commentMapper.insert(comment);
+			//增加评论数
+			Comment parentComment = new Comment();
+			parentComment.setId(comment.getParent_id());
+			parentComment.setComment_count(1);
+			commentExtMapper.incCommentCount(parentComment);
 		} else {
 			// 回复问题
 			Question question = questionMapper.selectByPrimaryKey(comment.getParent_id());
@@ -68,9 +75,9 @@ public class CommentService {
 		}
 	}
 
-	public List<CommentsDTO> listByQuestionId(Integer id) {
+	public List<CommentsDTO> listByTargetId(Integer id, CommentTypeEnum type) {
 		CommentExample commentExample = new CommentExample();
-		commentExample.createCriteria().andParent_idEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+		commentExample.createCriteria().andParent_idEqualTo(id).andTypeEqualTo(type.getType());
 		commentExample.setOrderByClause("gmt_create desc"); // 评论内容按时间倒序
 		List<Comment> comments = commentMapper.selectByExample(commentExample);
 		if (comments.size() == 0) {

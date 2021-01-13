@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.xiansi.dto.CommentsDTO;
 import com.xiansi.dto.QuestionDTO;
+import com.xiansi.enums.CommentTypeEnum;
 import com.xiansi.service.CommentService;
 import com.xiansi.service.QuestionService;
 
@@ -22,11 +23,13 @@ public class QuestionController {
 	@GetMapping("/question/{id}")
 	public String question(@PathVariable(name = "id") Integer id,Model model) {
 		QuestionDTO questionDTO = questionService.getById(id);
-		List<CommentsDTO> comments = commentService.listByQuestionId(id);
+		List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
+		List<CommentsDTO> comments = commentService.listByTargetId(id,CommentTypeEnum.QUESTION);
 		//累加阅读数
 		questionService.incView(id);
 		model.addAttribute("question", questionDTO);
 		model.addAttribute("comments", comments);
+		model.addAttribute("relatedQuestions", relatedQuestions);
 		return "question";
 	}
 }

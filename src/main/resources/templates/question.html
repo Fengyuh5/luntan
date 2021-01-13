@@ -8,7 +8,9 @@
 <link rel="stylesheet" th:href="@{/css/xiansiluntan.css}"></link>
 <script src="/js/jquery-3.5.1.min.js" type="application/javascript"></script>
 <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/js/moment.js" type="application/javascript"></script>
 <script src="/js/xiansiluntan.js" type="application/javascript"></script>
+
 </head>
 <body>
 	<div th:insert="~{navgation::nav}"></div>
@@ -28,15 +30,23 @@
 					<hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
 						th:text="${question.description}"></div>
+					
 					<a th:href="@{'/publish/'+${question.id}}" class="luntan-menu"
 						th:if="${session.user != null && session.user.id == question.creator}">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 						编辑
 					</a>
 					<hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hr_1">
-
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<span class="label label-info question_tags" th:each="tag:${question.tag.split('，')}">
+							<span class="glyphicon glyphicon-tags "></span>
+							<span class="label label-info " th:text="${tag}"></span>
+						</span>
+					</div>
+					<hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				</div>
-
+			
+				
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h4>
 						<span th:text="${question.comment_count}"> </span>个回复
@@ -50,22 +60,30 @@
 									th:src="${comment.user.avatar_url}">
 								</a>
 							</div>
-							<div class="media-body">
+							<div class="media-body" th:id="${'comment-body-'+comment.id}">
 								<h5 class="media-heading heading">
 									<span th:text="${comment.user.name}"></span>
 								</h5>
-							</div>
-						</div>
+						
 						<div class="commentText" th:text="${comment.content}"></div>
 						<div class="menu">
-							<span class="glyphicon glyphicon-thumbs-up icon"></span> <span
-								class="glyphicon glyphicon-comment icon"></span> <span
-								class="pull-right"
-								th:text="${#dates.format(comment.gmt_create,'yyyy-MM-dd')}"></span>
+							<span class="glyphicon glyphicon-thumbs-up icon"></span>
+							 <span class="comment-icon" th:data-id="${comment.id}" onclick="collapseComments(this)" > 
+							 	<span  class="glyphicon glyphicon-comment" ></span>
+								<span th:text="${comment.comment_count}"></span>
+							</span>
+							<span class="pull-right" th:text="${#dates.format(comment.gmt_create,'yyyy-MM-dd')}"></span>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments" th:id="${'comment-'+comment.id}">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" placeholder="回复一下" th:id="${'input-'+comment.id}">
+						<button type="button" class="btn btn-success comment-btn" onclick="comment(this)" th:data-id="${comment.id}">回复</button>
+						</div>
 						</div>
 					</div>
 				</div>
-
+			</div>
+		</div>
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h4>提交回复</h4>
 					<hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
@@ -111,7 +129,18 @@
 				</div>
 				<hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<h4>站主微信</h4>
+				<img src="/img/weixin.png" class="img-style img-thumbnail">
+				</div>
+				
+				<hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h4>相关问题</h4>
+					<ul class="list-style">
+						<li th:each="related : ${relatedQuestions}" class="li-style ">
+							<a th:href="@{'/question/'+${related.id}}" th:text="${related.title}"></a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

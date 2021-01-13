@@ -17,6 +17,8 @@ public class Comment {
 
     private String content;
 
+    private Integer comment_count = 0;
+
     public Integer getId() {
         return id;
     }
@@ -79,5 +81,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(Integer comment_count) {
+        this.comment_count = comment_count;
     }
 }
