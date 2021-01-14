@@ -14,11 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xiansi.mapper.UserMapper;
 import com.xiansi.model.User;
 import com.xiansi.model.UserExample;
+import com.xiansi.service.NotificationService;
 @Service
 //拦截器的内容
 public class SessionInterceptor implements HandlerInterceptor {
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private NotificationService notificationService;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -32,6 +35,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 					List<User> users = userMapper.selectByExample(userExample);
 						if (users.size() != 0) {
 							request.getSession().setAttribute("user", users.get(0));
+							Integer unreadCount = notificationService.unreadCount(users.get(0).getId());
+							request.getSession().setAttribute("unreadCount",unreadCount);
 						}
 					break;
 				}

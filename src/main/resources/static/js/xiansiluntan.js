@@ -71,47 +71,61 @@ function collapseComments(e) {
 			e.setAttribute("data-collapse", "in");
 			e.classList.add("active");
 		} else {
-			 $.getJSON("/comment/" + id, function (data) {
-                $.each(data.data.reverse(), function (index, comment) {
-                    var mediaLeftElement = $("<div/>", {
-                        "class": "media-left"
-                    }).append($("<img/>", {
-                        "class": "media-object",
-                        "src": comment.user.avatar_url
-                    }));
+			$.getJSON("/comment/" + id, function(data) {
+				$.each(data.data.reverse(), function(index, comment) {
+					var mediaLeftElement = $("<div/>", {
+						"class": "media-left"
+					}).append($("<img/>", {
+						"class": "media-object",
+						"src": comment.user.avatar_url
+					}));
 
-                    var mediaBodyElement = $("<div/>", {
-                        "class": "media-body"
-                    }).append($("<h5/>", {
-                        "class": "media-heading heading",
-                        "html": comment.user.name
-                    })).append($("<div/>", {
+					var mediaBodyElement = $("<div/>", {
+						"class": "media-body"
+					}).append($("<h5/>", {
+						"class": "media-heading heading",
+						"html": comment.user.name
+					})).append($("<div/>", {
 						"class": "commentText",
-                        "html": comment.content
-                    })).append($("<div/>", {
-                        "class": "menu"
-                    }).append($("<span/>", {
-                        "class": "pull-right",
-                        "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
-                    })));
+						"html": comment.content
+					})).append($("<div/>", {
+						"class": "menu"
+					}).append($("<span/>", {
+						"class": "pull-right",
+						"html": moment(comment.gmtCreate).format('YYYY-MM-DD')
+					})));
 
-                    var mediaElement = $("<div/>", {
-                        "class": "media"
-                    }).append(mediaLeftElement).append(mediaBodyElement);
+					var mediaElement = $("<div/>", {
+						"class": "media"
+					}).append(mediaLeftElement).append(mediaBodyElement);
 
-                    var commentElement = $("<div/>", {
-                        "class": "col-lg-12 col-md-12 col-sm-12 col-xs-12 comments"
-                    }).append(mediaElement);
+					var commentElement = $("<div/>", {
+						"class": "col-lg-12 col-md-12 col-sm-12 col-xs-12 comments"
+					}).append(mediaElement);
 
-                    subCommentContainer.prepend(commentElement);
-                });
+					subCommentContainer.prepend(commentElement);
+				});
 				comments.addClass("in");
 				e.setAttribute("data-collapse", "in");
 				e.classList.add("active");
 			});
 		}
 	}
-
-
-
 };
+
+function selectTag(e) {
+	var value = e.getAttribute("data-tag");
+	var previous = $("#tag").val();
+	if (previous.indexOf(value) == -1) {
+		if (previous) {
+			$("#tag").val(previous + '，' + value);
+		} else {
+			$("#tag").val(value);
+		}
+	}
+};
+
+function showSelectTag(){
+	$("#select-tag").show();
+}
+

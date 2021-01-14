@@ -57,14 +57,26 @@ create table comment(
 	content varchar(1024),
 	comment_count int default 0
 );  
+create table notification(
+	id int auto_increment primary key,
+	notifier int not null,
+	receiver int not null,
+	outer_id int not null,
+	type int not null,
+	gmt_create bigint not null,
+	status int default 0 not null
+
+);  
+alter table notification add notifier_name varchar(100) null;  
+alter table notification add outer_title varchar(256) null;  
 ```
-##Bug
+##Bug  
 1.前端无法以列表显示后台的数据，th:each不知道哪里出了问题(2021/01/06已解决)。   
 2.使用questionList拿到的user数据，avatar_url属性没有值(2021/01/06已解决)。    
 3.页面删除cookies后，在登录会重复插入sql(2021/01/08已解决)   
 4.数据库不存在一条用户数据或者一条信息数据，页面则会报错。在index下无法找到question.user.avatar_url(2021.01.10已解决)  
 5.添加逆向工程后，Question类的下Integer 自动绑定为null，导致在刷新页面时，出现404(2021.01.10已解决)   
-#Bug修复记录
+#Bug修复记录  
 1.前端无法以列表显示后台数据，原因为th:each中的questions拼写错误。    
 2.使用questionList拿到的user数据，avatar_url属性没有值，原因是在application.preperties中添加了mybatis.configuration.map-underscore-to-camel-case=true，改成false即可。   
 3.页面删除cookies后或者退出登录后，加入了userService验证，去判断用户是否存在。  

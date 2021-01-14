@@ -59,9 +59,12 @@
          <table tableName="question" domainObjectName="Question">
         	<property name="useActualColumnNames" value="true"/>
         </table> 
-          <这里注释的原因是 xml每次都不会自动覆盖文件，所以直接注释掉。-->  
+          <这里注释的原因是 xml每次都不会自动覆盖文件，所以直接注释掉。
         <table tableName="comment" domainObjectName="Comment">
         	<property name="useActualColumnNames" value="true"/>
-        </table>  
+        </table>  -->  
+        <table tableName="notification" domainObjectName="Notification">
+        	<property name="useActualColumnNames" value="true"/>
+        </table>
     </context>
 </generatorConfiguration>
