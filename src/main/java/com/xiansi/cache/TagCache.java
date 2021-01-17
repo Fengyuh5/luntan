@@ -14,27 +14,32 @@ public class TagCache {
 		List<TagDTO> tagDTOS = new ArrayList<TagDTO>();
 		TagDTO program = new TagDTO();
 		program.setCategoryName("开发语言");
-		program.setTags(Arrays.asList("javascript", "php", "css", "html", "html5", "java", "node.js", "python", "c++", 
-				"c", "golang", "objective-c", "typescript", "shell", "swift", "c#", "sass", "ruby", "bash", "less", 
-				"asp.net", "lua", "scala", "coffeescript", "actionscript", "rust", "erlang", "perl"));
+		program.setTags(Arrays.asList("JS", "PHP", "CSS", "HTML", "HTML5", 
+				"Java", "Node.js", "Python", "c++", "C", "Golang", "Shell", "Swift", "c#", "Sass", "Ruby", "Bash", "Less", 
+				"Asp.Net", "Lua", "Scala", "Coffeescript", "Actionscript", "Rust", "Erlang", "Perl"));
 		tagDTOS.add(program);
 		TagDTO framework = new TagDTO();
         framework.setCategoryName("平台框架");
-        framework.setTags(Arrays.asList("laravel", "spring", "express", "django", "flask", "yii", "ruby-on-rails", "tornado", "koa", "struts"));
+        framework.setTags(Arrays.asList("Laravel", "Spring", "Express", "Django", "Flask", "Yii", 
+        		"Ruby-on-rails", "Tornado", "Koa", "Struts"));
         tagDTOS.add(framework);
         TagDTO server = new TagDTO();
         server.setCategoryName("服务器");
-        server.setTags(Arrays.asList("linux", "nginx", "docker", "apache", "ubuntu", "centos", "缓存 tomcat", "负载均衡", "unix", "hadoop", "windows-server"));
+        server.setTags(Arrays.asList("Linux", "Nginx", "Docker", "Apache", "Ubuntu", "Centos",
+        		"缓存 Tomcat", "负载均衡", "Unix", "Hadoop", "Windows-Server"));
         tagDTOS.add(server);
 
         TagDTO db = new TagDTO();
         db.setCategoryName("数据库");
-        db.setTags(Arrays.asList("mysql", "redis", "mongodb", "sql", "oracle", "nosql memcached", "sqlserver", "postgresql", "sqlite"));
+        db.setTags(Arrays.asList("Mysql", "Redis", "Mongodb", "Sql", "Oracle", 
+        		"Nosql memcached", "SqlServer", "Postgresql", "Sqlite"));
         tagDTOS.add(db);
 
         TagDTO tool = new TagDTO();
         tool.setCategoryName("开发工具");
-        tool.setTags(Arrays.asList("git", "github", "visual-studio-code", "vim", "sublime-text", "xcode intellij-idea", "eclipse", "maven", "ide", "svn", "visual-studio", "atom emacs", "textmate", "hg"));
+        tool.setTags(Arrays.asList("Git", "Github", "VS-code", "Vim", 
+        		"Sublime-Text", "Xcode Intellij-Idea", "Eclipse", "maven", "ide", "svn", 
+        		"visual-studio", "Atom Emacs"));
         tagDTOS.add(tool);
 		return tagDTOS;
 	}
@@ -42,8 +47,10 @@ public class TagCache {
 	public static String filterInvalid(String tags) {
 		String[] split = StringUtils.split(tags, "，");
 		List<TagDTO> tagDTOS = get();
-		List<String> tagList = tagDTOS.stream().flatMap(tag -> tag.getTags().stream()).collect(Collectors.toList());
-		String invalid = Arrays.stream(split).filter(t -> StringUtils.isBlank(t) || !tagList.contains(t)).collect(Collectors.joining("，"));
+		List<String> tagList = tagDTOS.stream().flatMap(tag -> tag.getTags().stream())
+				.collect(Collectors.toList());
+		String invalid = Arrays.stream(split).filter(t -> StringUtils.isBlank(t) || !tagList.contains(t))
+				.collect(Collectors.joining("，"));
         return invalid;
 	}
 }

@@ -29,4 +29,27 @@
     <select id="selectRelated" parameterType="com.xiansi.model.Question" resultMap="BaseResultMap">
     select * from question where id != #{id} and tag regexp #{tag}
   </select>
+  <select id="countBySearch" parameterType="com.xiansi.dto.QuestionQueryDTO" resultType="java.lang.Integer">
+    select count(*) from question 
+    <where>
+    	<if test="search != null  and search != ''">
+    		and title regexp #{search}
+    	</if>
+    	<if test="tag != null  and tag != ''">
+    		and tag regexp #{tag}
+    	</if>
+    </where>
+  </select>
+  <select id="selectBySearch" parameterType="com.xiansi.dto.QuestionQueryDTO" resultMap="BaseResultMap">
+    select * from question 
+    <where>
+    	<if test="search != null and search != ''">
+    		and title regexp #{search}
+    	</if>
+    	<if test="tag != null  and tag != ''">
+    		and tag regexp #{tag}
+    	</if>
+    </where>
+   order by gmt_create desc limit #{page},#{size} 
+  </select>
 </mapper>

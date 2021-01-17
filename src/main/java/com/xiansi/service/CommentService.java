@@ -73,24 +73,30 @@ public class CommentService {
 			parentComment.setComment_count(1);
 			commentExtMapper.incCommentCount(parentComment);
 			//创建通知
-			createNotify(comment,dbComment.getCommentator(),commentator.getName(),question.getTitle(),NotificationTypeEnum.REPLY_COMMENT,question.getId());
+			createNotify(comment,dbComment.getCommentator(),commentator.getName(),question.getTitle(),
+					NotificationTypeEnum.REPLY_COMMENT,question.getId());
 		} else {
 			// 回复问题
 			Question question = questionMapper.selectByPrimaryKey(comment.getParent_id());
 			if (question == null) {
 				throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
 			}
-			commentMapper.insert(comment);
+			//comment.setComment_count(0);
+			commentMapper.insertSelective(comment);
 			question.setComment_count(1);
 			questionExtMapper.incCommentCount(question);
-			createNotify(comment, question.getCreator(),commentator.getName(),question.getTitle(),NotificationTypeEnum.REPLY_QUESTION, question.getId());
+			createNotify(comment, question.getCreator(),commentator.getName(),question.getTitle(),
+					NotificationTypeEnum.REPLY_QUESTION, question.getId());
 		}
 	}
-	private void createNotify(Comment comment, Integer receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Integer outer_id) {
+	private void createNotify(Comment comment, Integer receiver, String notifierName, 
+			String outerTitle, NotificationTypeEnum notificationType, Integer outer_id) {
+		if (receiver == comment.getCommentator()) {
+			return ;
+		}
 		Notification notification = new Notification();
 		notification.setGmt_create(System.currentTimeMillis());
 		notification.setType(notificationType.getType());
-		//Integer parent_id = comment.getParent_id();
 		notification.setOuter_id(outer_id);
 		notification.setNotifier(comment.getCommentator());
 		notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());

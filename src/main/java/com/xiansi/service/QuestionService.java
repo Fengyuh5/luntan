@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiansi.dto.PaginationDTO;
 import com.xiansi.dto.QuestionDTO;
+import com.xiansi.dto.QuestionQueryDTO;
 import com.xiansi.exception.CustomizeErrorCode;
 import com.xiansi.exception.CustomizeException;
 import com.xiansi.mapper.QuestionExtMapper;
@@ -30,10 +31,18 @@ public class QuestionService {
 	private UserMapper userMapper;
 	@Autowired
 	private QuestionExtMapper questionExtMapper;
-	public PaginationDTO<QuestionDTO> list(Integer page, Integer size) {
+	public PaginationDTO<QuestionDTO> list(String search, String tag, Integer page, Integer size) {
+		if (StringUtils.isNotBlank(search)) {
+			String[] tags = StringUtils.split(search," ");
+			search = Arrays.stream(tags).collect(Collectors.joining("|"));
+		}
+		
 		PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<QuestionDTO>();
 		Integer totalPage;//总页数
-		Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+		QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+		questionQueryDTO.setSearch(search);
+		questionQueryDTO.setTag(tag);
+		Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
 		if (totalCount % size == 0) {
 			totalPage = totalCount / size;
 		} else {
@@ -48,10 +57,9 @@ public class QuestionService {
 		paginationDTO.setPagination(totalPage,page);
 		// size*(page-1)
 		Integer offset = size * (page -1);
-		QuestionExample questionExample = new QuestionExample();
-		questionExample.setOrderByClause("gmt_create desc");
-		List<Question> questions = questionMapper.selectByExampleWithRowbounds
-				(questionExample, new RowBounds(offset,size));
+		questionQueryDTO.setSize(size);
+		questionQueryDTO.setPage(offset);
+		List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
 		List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
 		
 		for (Question question : questions) {
@@ -71,7 +79,6 @@ public class QuestionService {
 		QuestionExample questionExample = new QuestionExample();
 		questionExample.createCriteria().andCreatorEqualTo(userId);
 		Integer totalCount =(int) questionMapper.countByExample(questionExample);
-		//Integer totalCount = questionMapper.countByUserId(accound_id);
 		if (totalCount % size == 0) {
 			totalPage = totalCount / size;
 		} else {
@@ -85,7 +92,6 @@ public class QuestionService {
 			page = totalPage;
 		}
 		paginationDTO.setPagination(totalPage,page);
-		// size*(page-1)
 		Integer offset = size * (page -1);
 		QuestionExample example = new QuestionExample();
 		example.createCriteria().andCreatorEqualTo(userId);
@@ -130,9 +136,6 @@ public class QuestionService {
 			updateQuestion.setTitle(question.getTitle());
 			updateQuestion.setDescription(question.getDescription());
 			updateQuestion.setTag(question.getTag());
-			//updateQuestion.setComment_count(question.getComment_count());
-			//updateQuestion.setView_count(question.getView_count());
-			//updateQuestion.setLike_count(question.getLike_count());
 			QuestionExample example = new QuestionExample();
 			example.createCriteria().andIdEqualTo(question.getId());
 			int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
@@ -164,7 +167,6 @@ public class QuestionService {
 			BeanUtils.copyProperties(q, questionDTO);
 			return questionDTO;
 		}).collect(Collectors.toList());
-		
 		return questionDTOs;
 	}
 

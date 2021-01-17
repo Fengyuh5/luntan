@@ -34,6 +34,8 @@ public class AuthorizeController {
 		
 		accessTokenDTO.setClient_id("Iv1.34f5e26d12ae33d5");
 		accessTokenDTO.setClient_secret("55f754d7b50b54aca2477c674ade62f748cc8779");
+//		accessTokenDTO.setClient_id("05aea9238c34b6b4a68f");
+//		accessTokenDTO.setClient_secret("291b4008924139e1e7f4f319024ccc31bfb14e81");
 		accessTokenDTO.setCode(code);
 		accessTokenDTO.setRedirect_uri("http://localhost:8888/callback");
 		accessTokenDTO.setState(state);
